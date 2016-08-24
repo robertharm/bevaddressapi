@@ -34,6 +34,8 @@
 				{ data: "LatlongX",     width: "100" },
 				{ data: "LatlongY",     width: "100" }
 			],
+			"lengthChange": false,
+			"pageLength": 25,
 			"language": {
 				"url": "https://www.offene-adressen.at/assets/German.json"
 			}
@@ -45,8 +47,7 @@
 		if ("WebSocket" in window)
 		{
 		   //var ws = new WebSocket("ws://185.38.252.139:6002/ws/address/fts?q=" +
-		   var ws = new WebSocket("wss://api.bevaddress.allowed.org/ws/address/fts?q=" +
-					document.getElementById('addressfts').value + '"');
+		   var ws = new WebSocket("wss://api.bevaddress.allowed.org/ws/address/fts?q=" + document.getElementById('addressfts').value + "&n=" + document.getElementById('addressfts_number').value);
 		   ws.onopen = function()
 		   {
 			  document.getElementById('loading-image').style.display='block';
@@ -105,11 +106,14 @@
 		<div class="container">
 
 		<div class="row">
-		<h1>Volltextsuche</h1>
-
+		<h1>Offene Adressen für Österreich</h1>
 		<form id="searchbox">
-			<div class="form-group">
-			<label for="addressfts">Bitte Adresse eingeben:</label>
+		<div class="form-group">
+				<p>Wir haben eine Schnittstelle (API) zur Abfrage der Daten des offiziellen österreichischen Adressregisters  geschaffen.</p>
+				<p>Denn wir finden: Genauso wie Gehwege, Brücken und Straßen  gehören auch digitale Adressdaten zur öffentlichen Infrastruktur, die wir von  unserem Staat erwarten. Sie sollen offen sein und für alle in hoher Qualität  zur Verfügung stehen.</p>
+				<p>Durch eine Schnittstelle können EntwicklerInnen die  Adressdaten direkt in ihre Services, Apps und Websites einbauen.</p>
+				<p>Hier könnt ihr die Volltextsuche testen.</p>
+			<label for="addressfts"><br>Bitte Adresse eingeben:</label>
 			<input type="text"
 				class="form-control"
 				name="addressfts"
@@ -117,6 +121,17 @@
 				placeholder="Wien, erster bezirk, Akademiestrasse"
 				autofocus
 			/>
+			<label for="addressfts_number"><br>Maximale Anzahl an Resultaten:</label>
+			<input type="text"
+				class="form-control"
+				name="addressfts_number"
+				id="addressfts_number"
+				placeholder="100"
+				value="100"
+				style="width:158px;"
+			/>
+			
+			
 			<script type="text/javascript">
 				//info: start search with enter too
 				$("#searchbox").submit(function(e){
@@ -128,6 +143,7 @@
 					$(this).select();
 				});
 			</script>
+				</p>
 			</div>
 
 			<div id="sse">
@@ -166,8 +182,9 @@
 		<hr/>
 
 		<div class="row">
-		Diese Seite testet die Volltextsuche in <a href="http://www.bev.gv.at/portal/page?_pageid=713,2601271&_dad=portal&_schema=PORTAL" target="_blank">Adressdaten des BEV</a>.<br>
-		Der Quellcode f&uuml;r dieses Service ist verf&uuml;gbar unter
+		<p><strong>About</strong></p>
+		<p>Diese Seite testet die Volltextsuche in <a href="http://www.bev.gv.at/portal/page?_pageid=713,2601271&_dad=portal&_schema=PORTAL" target="_blank">Adressdaten des Bundesamts für Eich- und Vermessungswesen (BEV)</a>.<br>
+			Der Quellcode f&uuml;r dieses Service ist verf&uuml;gbar unter		</p>
 		<ul>
 			<li><a href='https://github.com/the42/bevdockerdb'>https://github.com/the42/bevdockerdb</a></li>
 			<li><a href='https://github.com/the42/bevaddress-dataload'>https://github.com/the42/bevaddress-dataload</a></li>
@@ -175,14 +192,47 @@
 		</ul>
 		Die API ist beschrieben unter <a href='https://github.com/the42/bevaddressapi/blob/master/README.md'>README</a>.
 		<br/><br/>
-		Team:
+		<strong>Team</strong>
 		<ul>
 			<li><a href="https://github.com/the42/" target="_blank">Johann H&ouml;chtl</a></li>
 			<li><a href="https://github.com/haslinger" target="_blank">Stefan Haslinger</a></li>
 			<li><a href="https://www.harm.co.at" target="_blank">Robert Harm</a></li>
 			<li><a href="https://www.sonjafischbauer.com" target="_blank">Sonja Fischbauer</a></li>
 		</ul>
-		Interesse an Mitarbeit? Dann bitte entweder Code gleich auf Github forken oder Email an <a href="mailto:info@offene-adressen.at?subject=Mitarbeit">info@offene-adressen.at</a>
+		<strong><br>
+		Mitmachen</strong>
+		<p dir="ltr">Wir freuen uns über Unterstützung, in jeder Form! Forke den Code auf GitHub oder schreib uns ein kurzes Mail an <a href="mailto:info@offene-adressen.at">info@offene-adressen.at</a></p>
+		<p>Du hast unsere API in deinem Projekt verwendet? Großartig! Gerne verlinken wir deine Website oder App. Schreib uns an <a href="mailto:info@offene-adressen.at">info@offene-adressen.at</a> </p>
+		<p><strong><br>
+			FAQ</strong><br>
+		</p>
+		<p dir="ltr"><strong>Was meint ihr mit &bdquo;offene Adressen&ldquo;? Adressen sind ja eh schon öffentlich bekannt und kein Geheimnis.</strong></p>
+		<p dir="ltr">Adressdaten sind in Österreich zwar kein Geheimnis, aber sie sind noch nicht &bdquo;offen&ldquo; im Sinn des Fachbegriffs &bdquo;Open Data&ldquo; (offene Daten):</p>
+		<p dir="ltr">- kostenlos für alle</p>
+		<p dir="ltr">- online frei zugänglich, z.B. ohne vorherige Registrierung</p>
+		<p dir="ltr">- maschinenlesbar (damit ein Programm direkt damit arbeiten kann) und</p>
+		<p dir="ltr">- in einem nicht-herstellerspezifischen Dateiformat, z.B. .csv statt .xls</p>
+		<p dir="ltr">- dürfen weiterverwendet werden (z.B. einbauen in eigene Apps, auch kommerzielle)</p>
+		<p dir="ltr"> (Die gesamte Definition von Open Data findet sich <a href="https://www.open3.at/grundlagen/open-government-datenprinzipien" target="_blank">hier</a>.)</p>
+		<p dir="ltr">In hoher Qualität – damit meinen wir: komplette Datensätze, fehlergeprüft und vollständig.</p>
+		<br>
+		<p dir="ltr"><strong>Wofür brauchen wir offene Adressen?</strong></p>
+		<p dir="ltr">Die Frage lautet eher: Wofür nicht? Denn fast alles passiert an einem bestimmten Ort.		</p>
+		<p dir="ltr">Egal ob Wohnbauten, öffentliche Gebäude, Parkanlagen, Bürokomplexe oder Orte mit geschichtlicher Bedeutung – alle lassen sich leichter finden, vergleichen, gruppieren und zusammenstellen, wenn es dazu offene Adressdaten gibt.</p>
+		<p dir="ltr">Eine offene Adressen-Datenbank hilft auch bei jedem online Formular, in das man eine Adresse eingibt: Wenn die Datenbank dahinter liegt, lassen sich Fehler beim Eintippen verhindern, &nbsp;Eingaben lassen sich überprüfen und die Datenqualität lässt sich verbessern.</p>
+		<br>
+		<p dir="ltr"><strong>Woher kommen die Daten?</strong></p>
+		<p dir="ltr">Die Adressdaten werden vom <a href="http://www.bev.gv.at/">Bundesamt für Eich- und Vermessungswesen</a> (BEV), das auch das <a href="http://www.adressregister.at/">Adressregister</a> betreibt, zur <a href="http://www.bev.gv.at/portal/page?_pageid=713,2601271&_dad=portal&_schema=PORTAL">Verfügung</a> gestellt.</p>
+		<p dir="ltr">In Österreich ist es so geregelt, dass Adressdaten auf Gemeindeebene erfasst werden. Sprich: Jede Gemeinde muss die Daten aller Adressen auf ihrem Gemeindegebiet ins zentral betriebene Register des BEV eintragen. (Rechtlich gesehen sind daher die Gemeinden die Eigentümerinnen der Adressdaten.)		</p>
+		<p dir="ltr">Das BEV stellt halbjährlich einen Auszug aus dem Register als Download zur Verfügung. (Rechtlich gesehen wird der Auszug als <a href="https://ec.europa.eu/digital-single-market/en/european-legislation-reuse-public-sector-information">Public Sector Information</a> (PSI) nach dem &nbsp;<a href="https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20004375">Informationsweiterverwendungsgesetz</a> bereitgestellt, nicht als <a href="https://www.ref.gv.at/uploads/media/OGD-1-1-0_20120730.pdf">Open Government Data</a>.)</p>
+		<p dir="ltr">Obwohl wir diesen Schritt in die richtige Richtung begrüßen, fehlt hier noch Einiges zur vollen Offenheit.</p>
+		<p dir="ltr">Nun ist die Politik gefordert, die rechtlichen Rahmenbedingungen zu ändern, damit die österreichischen Adressdaten geöffnet und eine Schnittstelle eingerichtet werden kann: Adressen sollen als echte Open Government Data veröffentlicht und regelmäßig aktualisiert werden.</p>
+		<br>
+		<p dir="ltr"><strong>Welche Technik und Infrastruktur verwendet ihr?</strong></p>
+		<p dir="ltr">Wir nutzen FIWARE, eine zugängliche, teilweisen offene Europäische Cloud-Infrastruktur. Diese Infrastruktur für das Projekt zu verwenden und zu überprüfen, wie sie funktioniert, war nicht nur eine spannende technologische Herausforderung – damit setzen wir auch unser demokratisches Recht als EU-BürgerInnen um.&nbsp;		</p>
+		<p dir="ltr">Als Datenbank verwenden wir eine erweiterte PostGIS-Datenbank, erweitert um Volltextsuche in Adressdaten. Diese <a href="https://github.com/the42/bevdockerdb">Erweiterungen</a> sind auf Github verfügbar und lassen sich als <a href="https://hub.docker.com/r/the42/bevdockerdb/">Docker</a> <a href="https://hub.docker.com/r/the42/bevdockerdb/">Image</a> leicht installieren.</p>
+		Die Daten werden über ein <a href="https://github.com/the42/bevaddress-dataload">SQL-Skript</a> in die Datenbank geladen und anschließend über eine <a href="https://github.com/the42/bevaddressapi">Websocket-API</a> bereitgestellt, die auch als <a href="https://hub.docker.com/r/the42/bevaddressapi/">Docker Image</a> verfügbar ist. Die Datenbank selbst läuft auf der Europäischen Cloud-Infrastruktur FIWARE. (Hier finden sich weiterführende Information zu <a href="https://myprivate42.wordpress.com/2016/02/26/docker-on-fiware/">Docker auf FIWARE</a>.)
+		<p>&nbsp;</p>
 		</div>
 		<hr noshade size="1">
 		<p>
